@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+#include <iostream>
+using namespace std;
+
+// int maxlevel;
+// int longestlevel;
+void dfs(vector<int>adj[],int n,int node,int par,int level,int& res,int maxlevel,int &longestlevel){
+    // cout<<"node="<<node<<" ";
+    // cout<<"maxlevel="<<maxlevel<<" "<<"level="<<level<<"\n";
+    if(maxlevel<level){
+        maxlevel = level;
+        // res = node;
+        // longestlevel=max(maxlevel,longestlevel);
+        if(longestlevel<maxlevel){
+            longestlevel=maxlevel;
+            res = node;
+        }
+    }
+    for(auto it : adj[node]){
+        if(it == par) continue;
+        dfs(adj,n,it,node,level+1,res,maxlevel,longestlevel);
+    }
+}
+
+int main() {
+	int n;
+	cin>>n;
+	vector<int>adj[n+1];
+	for(int i=1;i<n;i++){
+	    int u,v;
+	    cin>>u>>v;
+	    adj[u].push_back(v);
+	    adj[v].push_back(u);
+	}
+	int res1=0;
+	int res2=0;
+	int longestlevel1 =0;
+	int longestlevel2=0;
+   dfs(adj,n,1,0,1,res1,0,longestlevel1);
+//   cout<<res1<<"\n";
+//   cout<<longestlevel1<<"\n";
+   dfs(adj,n,res1,0,1,res2,0,longestlevel2);
+//   cout<<res2<<"\n";
+   cout<<longestlevel2-1;
+	
+}
